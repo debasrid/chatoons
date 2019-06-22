@@ -7,7 +7,7 @@ const Message = require('../models/messages');
 
 router.post('/startchat',(req, res, next) => {
     Message.create({
-        messagethreadtimestamp:moment(new Date()).format("YYYY-MM-DD"),
+        messagethreadtimestamp:moment(new Date()).format("YYYY-MM-DD HH:mm:ss:SSS"),
           messagethreadvisible: true,
         })
        .then(message =>{
@@ -18,7 +18,7 @@ router.post('/startchat',(req, res, next) => {
             messagereceiver:req.body.receiverid,
             imageURL:req.body.imageURL,
             emoticonURL:req.body.emoticonURL,
-            messagesent:moment(new Date()).format("YYYY-MM-DD"),
+            messagesent:moment(new Date()).format("YYYY-MM-DD HH:mm:ss:SSS"),
             messagethreadvisible:true
         }
         console.log(newmessage);

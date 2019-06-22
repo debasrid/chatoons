@@ -27,11 +27,17 @@ const multer = Multer({ storage: storage });
 //----------------------------------------------------------file upload to s3 -------------------------//
 
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+/* GET user. */
+router.get('/:userId', function(req, res, next) {
+  User.findById(req.params.userId)
+    .then(result =>{
+      res.json(result);
+    })
+    .catch(err => {
+      res.json(err);
+    })
 });
-//GET username
+
 
 // POST route => to create a new user
 router.post('/', (req, res, next)=>{

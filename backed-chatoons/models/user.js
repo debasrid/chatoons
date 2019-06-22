@@ -10,9 +10,23 @@ const userSchema = new Schema({
   profile_picture:[{ type:String }],
   imageUrl: { type: String},
   message: [],
+  friendrequestsreceived: [{
+    frienduserid: { type : Schema.Types.ObjectId, ref: 'User' },
+    friendrequeststatus: {type: String, enum: ['ACCEPTED', 'DECLINED', 'PENDING'], default: 'PENDING'},
+    friendrequestSentOn: Date,
+    friendrequestRespondedOn: Date
+  }],
+  friendrequestssent: [{
+    frienduserid: { type : Schema.Types.ObjectId, ref: 'User' },
+    friendrequeststatus: {type: String, enum: ['ACCEPTED', 'DECLINED', 'PENDING'], default: 'PENDING'},
+    friendrequestSentOn: Date,
+    friendrequestRespondedOn: Date
+  }],
   friends: [{
-    frienduserid: [ { type : Schema.Types.ObjectId, ref: 'User' } ],
-    friendrequestid: [ { type : Schema.Types.ObjectId, ref: 'Requests' } ]
+    frienduserid: { type : Schema.Types.ObjectId, ref: 'User' },
+    friendfirstname: { type : String },
+    friendlastname: { type : String },
+    friendimageUrl: { type : String }
   }],
   role:{type: String, enum: ['USER', 'ADMIN'], default: 'USER'}
 }, {
