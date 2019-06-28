@@ -2,13 +2,12 @@ const mongoose = require('mongoose');
 const Schema   = mongoose.Schema;
 
 const userSchema = new Schema({
-  
+  username: String,
   firstname: String,
   lastname: String,
   email: String,
   password: String,
-  profile_picture:[{ type:String }],
-  imageUrl: { type: String},
+  profile_picture: [{ type: String}],
   message: [],
   friendrequestsreceived: [{
     frienduserid: { type : Schema.Types.ObjectId, ref: 'User' },

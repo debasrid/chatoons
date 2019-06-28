@@ -9,10 +9,18 @@ const User = require('../models/user');
 router.get('/getFriends', (req, res, next) => {
     User.findById(req.query.userId)
     .then(result =>{
-        res.json(result)
-    })
-    .catch(err => {
-        res.send(err)})
+        var friendIds = result.friends.map(friend => friend.frienduserid );
+       
+        User.find({'_id': { $in: friendIds}})
+        .then(friendList => {
+            console.log('friendList: '+friendList)
+            res.json(friendList)
+        })
+        .catch(err => {
+            res.send(err)})
+        })
+        .catch(err => {
+            res.send(err)})        
     })
 
 //search friendlist

@@ -6,11 +6,13 @@ const messageSchema = new Schema({
 
   messagethreadtimestamp: Date,
   messagethreadvisible: Boolean,
+  messengers:  [{ type : Schema.Types.ObjectId, ref: 'User' }],
   messages:[{
-    messagesender:  [ { type : Schema.Types.ObjectId, ref: 'User' } ],
-    messagereceiver:  [ { type : Schema.Types.ObjectId, ref: 'User' } ],
-    imageURL: String,
-    emoticonURL: String,
+    messagesender: String,
+    messagereceiver:  String,
+    textmessage: String,
+    imagemessage: String,
+    emoticonmessage: String,
     messagesent: Date
   }] 
 });
