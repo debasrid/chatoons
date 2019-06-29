@@ -3,6 +3,7 @@ import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import MessagesContainer from './MessagesContainer'
 import MessageInput from './MessageInput'
 import axios from 'axios'
+import { API_URL } from './config'
 
 export default class MessageBox extends Component {
     state={
@@ -15,7 +16,7 @@ export default class MessageBox extends Component {
         event.preventDefault();
         const senderid = this.state.senderid;
         const receiverid = this.state.receiverid;
-        axios.post("http://localhost:3000/chat/startchat", { senderid,  receiverid})
+        axios.post(`${API_URL}/chat/startchat`, { senderid,  receiverid})
         .then( response => {
             this.setState({threadid: response._id});
             console.log(response);

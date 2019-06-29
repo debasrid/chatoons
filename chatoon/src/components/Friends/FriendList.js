@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import MessageBox from "../chat/MessageBox";
 import axios from 'axios';
+import { API_URL } from './config'
 
 class FriendList extends Component {
     constructor(){
@@ -19,7 +20,7 @@ class FriendList extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:3000/friends/getFriends?userId=5d01829c42abc000e0dab2cf")
+        axios.get(`${API_URL}/friends/getFriends?userId=5d01829c42abc000e0dab2cf`)
         .then(response => {
             this.setState({friends: response.data})
         })

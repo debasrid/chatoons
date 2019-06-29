@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import axios from 'axios';
+import { API_URL } from './config'
 
 export default class MessagesContainer extends Component {
     constructor(){
@@ -11,7 +11,7 @@ export default class MessagesContainer extends Component {
         }
     }
     componentDidMount() {
-        axios.get("http://localhost:3000/chat/5d1522cc6eddab38909d676e")
+        axios.get(`${API_URL}/chat/5d1522cc6eddab38909d676e`)
         .then(response => {
             if(response.data.messagethreadvisible){
                 this.setState({
