@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 //import { Button, Header, Image, Modal } from 'semantic-ui-react'
 //import PhotosUploader from '../PhotosUploader';
 //import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
-import Spinner from './Spinner'
-import Images from './Images'
-import Buttons from './Buttons'
-import { API_URL } from './config'
+//import Spinner from './Spinner'
+//import Images from './Images'
+//import Buttons from './Buttons'
+import { API_URL } from '../../config/config';
 import axios from 'axios';
 
 export default class MessageInput extends Component {
@@ -14,40 +14,17 @@ export default class MessageInput extends Component {
         this.state = { 
             threadid: this.props.threadid,
             textmessage: `${API_URL}/chat/` + this.props.threadid + "/sendmessage", 
-            uploading: false,
-            images: []
+            imageFile: null
         }
+        this.handleImageUpload = this.handleImageUpload.bind(this)
     }
 
-    onChange = e => {
-        const files = Array.from(e.target.files)
-        this.setState({ uploading: true })
-    
-        const formData = new FormData()
-    
-        files.forEach((file, i) => {
-          formData.append(i, file)
+    handleImageUpload(event) {
+        this.setState({
+            imageFile: URL.createObjectURL(event.target.files[0])    
         })
-    
-        fetch(`${API_URL}/content/image-upload`, {
-          method: 'POST',
-          body: formData
-        })
-        .then(res => res.json())
-        .then(images => {
-          this.setState({ 
-            uploading: false,
-            images
-          })
-        })
-      }
-
-    removeImage = id => {
-    this.setState({
-        images: this.state.images.filter(image => image.public_id !== id)
-    })
     }
-     
+      
     handleFormSubmit = (event) => {
       event.preventDefault();
       const textmessage = this.state.textmessage;
@@ -68,29 +45,20 @@ export default class MessageInput extends Component {
         const style = {
            
             color: "pink",
-            height:"100px",
+            height:"120px",
             border:'3 px solid grey'
         }
-        const { uploading, images } = this.state
 
-        const content = () => {
-            switch(true) {
-                case uploading:
-                return <Spinner />
-                case images.length > 0:
-                return <Images images={images} removeImage={this.removeImage} />
-                default:
-                return <Buttons onChange={this.onChange} />
-            }
-        }
+       
 
         return (
             <div style={style} >
                 <form onSubmit={this.handleFormSubmit}>
-                <div className='buttons'>
-                    {content()}
-                </div>
-                    <textarea name="textmessage" value={this.state.textmessage} onChange={ e => this.handleChange(e)}/>
+                    <div>
+                        <input type="file" onChange={this.handleImageUpload}/>
+                        <img width="50px" src={this.state.imageFile}/>
+                    </div>
+                    <textarea name="textmessage" value={this.props.textmessage} onChange={ e => this.props.handleChange(e)}/>
                     <input type="submit" value="Submit" />
                 </form>
             </div>

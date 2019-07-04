@@ -9,6 +9,8 @@ import AddFriends from './components/Friends/AddFriends';
 import MessagesContainer from './components/chat/MessagesContainer';
 import MessageBox from './components/chat/MessageBox';
 
+require('dotenv').config();
+
 function App() {
   return (
     // <div className="bgcontainer">

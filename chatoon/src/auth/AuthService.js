@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API_URL } from './config'
+import { API_URL } from '../config/config'
 
 class AuthService {
   service = axios.create({
-    baseURL: `${API_URL}/auth`,
+    baseURL: "http://localhost:5000/auth",
     withCredentials: true
   });
 

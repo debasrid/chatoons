@@ -4,5 +4,5 @@ import { faBowlingBall } from '@fortawesome/free-solid-svg-icons'
 
 export default () => 
   <div className='spinner fadein'>
-    <FontAwesomeIcon icon={faBowlingBall} size='5x' color='#3B5998' />
+    <FontAwesomeIcon icon={faBowlingBall} size='3x' color='#3B5998' />
   </div>

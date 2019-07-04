@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { API_URL } from './config'
+import { API_URL } from '../../config/config'
 
 export default class MessagesContainer extends Component {
     constructor(){
@@ -11,7 +11,7 @@ export default class MessagesContainer extends Component {
         }
     }
     componentDidMount() {
-        axios.get(`${API_URL}/chat/5d1522cc6eddab38909d676e`)
+        axios.get("http://localhost:5000/chat/5d1522cc6eddab38909d676e")
         .then(response => {
             if(response.data.messagethreadvisible){
                 this.setState({
@@ -24,8 +24,8 @@ export default class MessagesContainer extends Component {
     render() {
 
         const style = {
-            'padding-left': "50px",
-            'padding-top': "50px",
+            paddingLeft: "50px",
+            paddingTop: "50px",
             backgroundColor: "pink",
             color: "white",
             height:"300px"

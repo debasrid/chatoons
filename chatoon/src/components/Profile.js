@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { API_URL } from './config'
+import { API_URL } from '../config/config'
 
 export default class Profile extends Component {
     constructor(){
@@ -15,7 +15,10 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-        axios.get(`{ API_URL }/users/5d0c0ac5602bbd448c9d4ee4`)
+        
+        var userprofileapi = "http://localhost:5000/users/5d0c0ac5602bbd448c9d4ee4";
+        
+        axios.get(userprofileapi)
         .then(response => {
             this.setState({
                 username: response.data.username,
