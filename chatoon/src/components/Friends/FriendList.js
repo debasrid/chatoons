@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import MessageBox from "../chat/MessageBox";
 import axios from 'axios';
+import { API_URL } from '../../config/config'
 
 class FriendList extends Component {
     constructor(){
@@ -19,7 +20,7 @@ class FriendList extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:3000/friends/getFriends?userId=5d01829c42abc000e0dab2cf")
+        axios.get("http://localhost:5000/friends/getFriends?userId=5d01829c42abc000e0dab2cf")
         .then(response => {
             this.setState({friends: response.data})
         })
@@ -45,16 +46,16 @@ class FriendList extends Component {
              }
         ] 
         */
-        var friendProfileList = this.state.friends.map(function(friend){
-            return  <div><p><img src={friend.profile_picture} width="50" height="50"></img></p><p>{friend.firstname}&nbsp;{friend.lastname}</p><p>{friend.username}</p><hr /></div>;
+        var friendProfileList = this.state.friends.map(function(friend, index){
+            return  <div><p><img src={friend.profile_picture} id={index} width="50" height="50"></img></p><p>{friend.firstname}&nbsp;{friend.lastname}</p><p>{friend.username}</p><hr /></div>;
         })
         return (
             <div className="friendlistcontainer">
                 <div>
                     <h2>My Friends</h2>
-                    <div><p>
+                    <div>
                         <ul>{ friendProfileList }</ul>                    
-                    </p></div>    
+                    </div>    
                 </div>   
             </div>
         );

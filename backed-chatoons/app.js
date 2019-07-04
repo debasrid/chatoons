@@ -6,18 +6,20 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const { CLIENT_ORIGIN } = require('./config/config')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const friendRouter = require('./routes/friendlist');
 const authRoutes = require('./routes/auth');
 const chatRouter = require('./routes/chat');
+const imageUploadRouter = require('./routes/image-upload');
 const passport = require('passport');
 var app = express();
 
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:3001'] 
+  origin: CLIENT_ORIGIN
 }));
 
 app.use('/api', authRoutes);
@@ -40,6 +42,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/friends', friendRouter);
 app.use('/chat', chatRouter);
+app.use('/content', imageUploadRouter);
 
 // Connection to the database "chatoonsdb"
 mongoose.connect('mongodb://localhost/chatoonsdb', { useNewUrlParser: true })
