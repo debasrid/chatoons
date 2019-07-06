@@ -9,14 +9,19 @@ const User       = require('../models/user');
 
 
 authRoutes.post('/signup', (req, res, next) => {
+    console.log(req.body);
+    const username = req.body.username;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
     const email = req.body.email;
     const password = req.body.password;
-  
+    const profile_picture= req.body.profile_picture;
+    
     if (!email || !password) {
       res.status(400).json({ message: 'Provide email and password' });
       return;
     }
-
+    console.log("password", password);
     if(password.length < 7){
         res.status(400).json({ message: 'Please make your password at least 8 characters long for security purposes.' });
         return;
@@ -36,18 +41,22 @@ authRoutes.post('/signup', (req, res, next) => {
   
         const salt     = bcrypt.genSaltSync(10);
         const hashPass = bcrypt.hashSync(password, salt);
-  
+
         const aNewUser = new User({
-            email:email,
-            password: hashPass
+            username: username,
+            firstname: firstname,
+            lastname: lastname,            
+            email: email,
+            password: hashPass,
+            profile_picture: profile_picture
         });
-  
+        
         aNewUser.save(err => {
             if (err) {
                 res.status(400).json({ message: 'Something went wrong User not created.' });
                 return;
             }
-            
+            debugger
             // Automatically log in user after sign up
             // .login() here is actually predefined passport method
             req.login(aNewUser, (err) => {
@@ -66,6 +75,20 @@ authRoutes.post('/signup', (req, res, next) => {
 });
 
 authRoutes.post('/login', (req, res, next) => {
+    console.log(req.body)
+    const salt     = bcrypt.genSaltSync(10);
+    const hashPass = bcrypt.hashSync(req.body.password, salt);
+   
+    passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password'
+      },
+      
+      ));
+    // let theUser = {
+    //     email: req.body.email,
+    //     password: hashPass
+    // }
     passport.authenticate('local', (err, theUser, failureDetails) => {
         if (err) {
             res.status(500).json({ message: 'Something went wrong with authenticating user' });
@@ -75,6 +98,7 @@ authRoutes.post('/login', (req, res, next) => {
         if (!theUser) {
             // "failureDetails" contains the error messages
             // from our logic in "LocalStrategy" { message: '...' }.
+            console.log(failureDetails);
             res.status(401).json(failureDetails);
             return;
         }

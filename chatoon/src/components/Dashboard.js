@@ -1,4 +1,4 @@
-gimport React, { Component } from 'react';
+import React, { Component } from 'react';
 import Profile from './Profile';
 import Friendlist from '../components/Friends/FriendList';
 import Addfriend from './Friends/AddFriends'

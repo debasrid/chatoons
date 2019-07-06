@@ -19,20 +19,25 @@ export default class Login extends Component {
 
       handleSubmit = (e) => {
         e.preventDefault();
+          
+        console.log("pressed")
         
         const email = this.state.email;
         const password = this.state.password;
   
         this.service.login(email, password)
           .then(response => {
-              console.log(response);
+              console.log("login:", response);              
               this.props.setUser(response)
+              debugger
+          }).catch(err =>  {
+              console.log(err)
           })
     }
     render() {
         return (
             <div className="logincontainer">
-                 <form onSubmit={e => this.handleSubmit(e)} className="loginbox">
+                 <form onSubmit={this.handleSubmit} className="loginbox">
                      <h1>Login</h1>
                     <div>
                         <input
@@ -54,7 +59,8 @@ export default class Login extends Component {
                         />
                     </div>
                     <br/>
-                    <input type="submit" value="signup" className="button-login" />
+                  
+                    <input type="submit" value="login" className="button-login" />
                     </form>
             </div>
         )

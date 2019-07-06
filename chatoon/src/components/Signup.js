@@ -9,17 +9,13 @@ export default class Signup extends Component {
         lastname: "",
         email: "",
         password: "",
-        gender: "",
+        profilepicture: "",
     };
 
     authService = new AuthService();
 
     handleChange = e => {
-        const { name, value, checked, type } = e.target;
-
-        if (type === "checkbox") {
-            value = checked;
-        }
+        const { name, value} = e.target;
         this.setState({
             [name]: value
         });
@@ -27,14 +23,14 @@ export default class Signup extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        const username = this.state.username;
         const firstname = this.state.firstname;
         const lastname = this.state.lastname;
         const email = this.state.email;
         const password = this.state.password;
-        const gender = this.state.gender;
+        const profile_picture = this.state.profile_picture;
 
-        this.authService.signup(email, password)
+        this.authService.signup(username,firstname, lastname,email, password, profile_picture)
             .then(response => {
                 console.log(response);
             })
@@ -47,6 +43,14 @@ export default class Signup extends Component {
                 <form onSubmit={e => this.handleSubmit(e)} className="signupbox">
 
                     <h1 className="signupheader">Sign up</h1>
+                    <div>
+                        <label><b>User Name:</b>&nbsp;&nbsp;</label>
+                        <input name="username"
+                            type="text"
+                            placeholder=""
+                            value={this.state.username}
+                            onChange={e => this.handleChange(e)} />
+                    </div>
 
                     <div>
                         <label><b>First Name:</b>&nbsp;&nbsp;</label>
@@ -87,19 +91,9 @@ export default class Signup extends Component {
                         />
                     </div>
 
-                    {/* <div>
-                    <label htmlFor="Privacy">Do u want your profile to be Public?</label>
-                        <input
-                            name="privacy"
-                            type="checkbox"
-                            value={this.state.privacy}
-                            onChange={e => this.handleChange(e)}
-                        />
-                    </div> */}
-
                     <div onChange={e => this.handleChange(e)}>
                     <label><b>Profile Photo:</b>&nbsp;</label>
-                    <input type="file" name="fileToUpload" id="fileToUpload"/>
+                    <input type="file" name="fileToUpload" value={this.state.profile_picture}/>
                     </div>
 
                     <div className="signupheader">

@@ -4,6 +4,8 @@ var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+const User = require("./models/user");
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { CLIENT_ORIGIN } = require('./config/config')
@@ -16,13 +18,12 @@ const chatRouter = require('./routes/chat');
 const imageUploadRouter = require('./routes/image-upload');
 const passport = require('passport');
 var app = express();
+var LocalStrategy = require('passport-local').Strategy;
 
 app.use(cors({
   credentials: true,
   origin: CLIENT_ORIGIN
 }));
-
-app.use('/api', authRoutes);
 
 // USE passport.initialize() and passport.session() HERE:
 app.use(passport.initialize());
@@ -39,6 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/auth', authRoutes);
 app.use('/users', usersRouter);
 app.use('/friends', friendRouter);
 app.use('/chat', chatRouter);
@@ -52,6 +54,24 @@ mongoose.connect('mongodb://localhost/chatoonsdb', { useNewUrlParser: true })
     console.error('Error connecting to mongo', err);
   });
 
+  passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  },(username, password, next) => {
+    User.findOne({ username }, (err, user) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return next(null, false, { message: "Incorrect username" });
+      }
+      if (!bcrypt.compareSync(password, user.password)) {
+        return next(null, false, { message: "Incorrect password" });
+      }
+  
+      return next(null, user);
+    });
+  }));
 
 // ADD SESSION SETTINGS HERE:
 app.use(session({

@@ -48,7 +48,7 @@ render() {
       <div className="App">
         <Header currentUser={this.state.email}/>
         <Switch>
-          {/* <Route exact path="/" component={Signup} />
+          <Route exact path="/" component={Signup} />
            <Route exact path="/login"
             render={() => <Login setUser={this.setUser} />}
           /> 
@@ -56,9 +56,9 @@ render() {
             exact
             path="/dashboard"
             render={() => <Dashboard currentUser={this.state.setUser} />}
-          /> */}
+          />
         </Switch>
-         <Dashboard />        {/* <MessagesContainer/> */}
+         {/* <Dashboard />        <MessagesContainer/> */}
       {/* </div>
       <UserProfile/>
       <FriendList/>
