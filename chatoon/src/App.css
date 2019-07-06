@@ -1,66 +1,168 @@
 .App {
- 
   height:90vh;
 }
-.bgcontainer{
-  background-color: #61dafb;
-  height: 100vh;
-  width:100vw;
+a{
+ color:white;
 }
-/* Chat box Css*/
- .messageBox{
-   background-color: white;
-   border: 1px solid grey;
+.bgcontainer{
+ display:flex;
+ justify-content: space-between;
+ height: 100vh;
+ width:100vw;
+}
+.App-header {
+ background-color: #282c34;
+ min-height: 10vh;
+ display: flex; 
+ justify-content:space-between;
+ font-size: 20px;;
+ color: white;
+ padding: 20px 20px 0 20px;
+ font-family: Georgia, 'Times New Roman', Times, serif;
+}
+ .header-item{
+ justify-content: space-evenly;
+} 
 
+.signupcontainer{
+  display:flex;
+  align-content: center;
+  background-image: url('./signupbg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ff8340;
+  justify-content:flex-end;
+  width:100vw;
+  height: 100vh;
+}
+.signupbox{ 
+ justify-content: center;
+ width:400px;
+ height:40%;
+ margin-top:21%;
+ margin-right:25%; 
  }
 
-
-
-
-
-
-.bg{
-  display: flex;
-  justify-content: space-between;
-  background-color: #282c34;                                         
-  height: 70vh;
-  width: 90vw;
-  margin: auto;
-  padding-right:20px; 
+.signupbox div {
+ flex-direction: row;
+ justify-content:center ;
+ align-content:center;
+ padding-left: 35px;  
 }
-.bgboxright{
-  background-image: url('./frontimg.png'); 
-
+.signupheader {
+ text-align: center;
+ padding: 5px;  
 }
 
-
-.signupbox{
-  display: flex;
+.button-signup {
+  background-color: rgb(65, 134, 236); /* Green */
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+/*--------------------------login-----------------------*/
+.logincontainer{
+  display:flex;
   align-content: center;
+  background-image: url('./loginbg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #0973dd;
+  justify-content:center;
+  width:100vw;
+  height: 90vh;
+}
+.loginbox{ 
+  text-align: center;
   justify-content: center;
   width:400px;
-  padding: 30px 10px 10px 10px;
-  border: 1px solid black;
-  background-color: azure;
-  
+  height:40%;
+  margin-top:15%;
+  margin-left: 12%;
+   
+  }
+  .button-login {
+    background-color: rgb(13, 109, 13); /* Green */
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+/*---------------------------------dashboard & component-----------------------*/
+.dashboardcontainer{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
 }
-.signupbox div * {
-  flex-direction: row;
-  justify-content:space-around ;
-  align-content:center;
-  padding: 5px;  
+.profilebox{
+ font-family: Georgia, 'Times New Roman', Times, serif;
+ padding-left: 30px;
+ margin-left: 30px;
+ width: 25%;
+ height:300px;
+ border:1px solid grey;
+ border-radius: 20px;
+ background-color: antiquewhite;
 }
-
-.signupheader {
+.addfriendbox{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+ margin: 20px;
+ width: 30%;
+}
+.searchfriendbox{
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  padding-left: 20px;
   text-align: center;
-  padding: 5px;  
+  margin: 20px;
+  width: 25%;
+  height:150px;
+  border:1px solid grey;
+  border-radius: 20px;
+  
+ }
+.button-addfriend {
+  background-color: rgb(109, 5, 5); /* Green */
+  border: none;
+  color: white;
+  padding: 6px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
 }
 
-div.signupleftbox *{
-  float: left;
-  display:flex;
-  justify-content: center;
+
+
+/* Chat box Css*/
+.messageBox{
+  background-color: white;
+  border: 1px solid grey;
+  height:70vh;
+  width: 40vw;
+  text-align: center;
+
 }
+.bg{
+ display: flex;
+ justify-content: space-between;
+ background-color: #282c34;                                         
+ height: 70vh;
+ width: 90vw;
+ margin: auto;
+ padding-right:20px; 
+}
+.bgboxright{
+ background-image: url('./frontimg.png'); 
+
+}
+
 /*--------------------------------------------*/
 
 .friendlistcontainer{
@@ -81,22 +183,7 @@ div.signupleftbox *{
 
 /*--------------------------------------------*/
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 .App-link {
   color: #61dafb;

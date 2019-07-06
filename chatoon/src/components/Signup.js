@@ -43,13 +43,13 @@ export default class Signup extends Component {
     render() {
         return (
 
-            <div className="signupbox">
-                <form onSubmit={e => this.handleSubmit(e)}>
+            <div className="signupcontainer">
+                <form onSubmit={e => this.handleSubmit(e)} className="signupbox">
 
                     <h1 className="signupheader">Sign up</h1>
 
                     <div>
-                        <label>First Name:&nbsp;</label>
+                        <label><b>First Name:</b>&nbsp;&nbsp;</label>
                         <input name="firstname"
                             type="text"
                             placeholder=""
@@ -58,7 +58,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Last Name:&nbsp;&nbsp;</label>
+                        <label><b>Last Name:</b>&nbsp;&nbsp;</label>
                         <input name="lastname"
                             type="text"
                             placeholder=""
@@ -68,7 +68,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label><b>Email:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <input
                             name="email"
                             type="email"
@@ -78,7 +78,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Password:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label><b>Password:</b>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <input
                             name="password"
                             type="password"
@@ -98,35 +98,12 @@ export default class Signup extends Component {
                     </div> */}
 
                     <div onChange={e => this.handleChange(e)}>
-                        <label>Gender:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="male"
-                            id="male" />
-                        {" "}
-                        <label htmlFor="male">Male</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="female"
-                            id="female"
-                        />{" "}
-                        <label htmlFor="female">Female</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="other"
-                            id="other"
-                        />{" "}
-                        <label htmlFor="other">Other</label>
+                    <label><b>Profile Photo:</b>&nbsp;</label>
+                    <input type="file" name="fileToUpload" id="fileToUpload"/>
                     </div>
 
                     <div className="signupheader">
-                        <input type="submit" value="submit" />
+                        <input type="submit" value="submit" className="button-signup"/>
                     </div>
 
                 </form>
