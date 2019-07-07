@@ -5,21 +5,18 @@ import AuthService from '../auth/AuthService';
 
 export default class Signup extends Component {
     state = {
+        username:"",
         firstname: "",
         lastname: "",
         email: "",
         password: "",
-        gender: "",
+        profilepicture: "",
     };
 
     authService = new AuthService();
 
     handleChange = e => {
-        const { name, value, checked, type } = e.target;
-
-        if (type === "checkbox") {
-            value = checked;
-        }
+        const { name, value} = e.target;
         this.setState({
             [name]: value
         });
@@ -27,14 +24,14 @@ export default class Signup extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        const username = this.state.username;
         const firstname = this.state.firstname;
         const lastname = this.state.lastname;
         const email = this.state.email;
         const password = this.state.password;
-        const gender = this.state.gender;
+        const profile_picture = this.state.profile_picture;
 
-        this.authService.signup(email, password)
+        this.authService.signup(username,firstname, lastname,email, password, profile_picture)
             .then(response => {
                 console.log(response);
             })
@@ -43,13 +40,21 @@ export default class Signup extends Component {
     render() {
         return (
 
-            <div className="signupbox">
-                <form onSubmit={e => this.handleSubmit(e)}>
+            <div className="signupcontainer">
+                <form onSubmit={e => this.handleSubmit(e)} className="signupbox">
 
                     <h1 className="signupheader">Sign up</h1>
+                    <div>
+                        <label><b>User Name:</b>&nbsp;&nbsp;</label>
+                        <input name="username"
+                            type="text"
+                            placeholder=""
+                            value={this.state.username}
+                            onChange={e => this.handleChange(e)} />
+                    </div>
 
                     <div>
-                        <label>First Name:&nbsp;</label>
+                        <label><b>First Name:</b>&nbsp;&nbsp;</label>
                         <input name="firstname"
                             type="text"
                             placeholder=""
@@ -58,7 +63,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Last Name:&nbsp;&nbsp;</label>
+                        <label><b>Last Name:</b>&nbsp;&nbsp;</label>
                         <input name="lastname"
                             type="text"
                             placeholder=""
@@ -68,7 +73,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label><b>Email:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <input
                             name="email"
                             type="email"
@@ -78,7 +83,7 @@ export default class Signup extends Component {
                     </div>
 
                     <div>
-                        <label>Password:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <label><b>Password:</b>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         <input
                             name="password"
                             type="password"
@@ -87,46 +92,13 @@ export default class Signup extends Component {
                         />
                     </div>
 
-                    {/* <div>
-                    <label htmlFor="Privacy">Do u want your profile to be Public?</label>
-                        <input
-                            name="privacy"
-                            type="checkbox"
-                            value={this.state.privacy}
-                            onChange={e => this.handleChange(e)}
-                        />
-                    </div> */}
-
                     <div onChange={e => this.handleChange(e)}>
-                        <label>Gender:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="male"
-                            id="male" />
-                        {" "}
-                        <label htmlFor="male">Male</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="female"
-                            id="female"
-                        />{" "}
-                        <label htmlFor="female">Female</label>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="other"
-                            id="other"
-                        />{" "}
-                        <label htmlFor="other">Other</label>
+                    <label><b>Profile Photo:</b>&nbsp;</label>
+                    <input type="file" name="fileToUpload" value={this.state.profile_picture}/>
                     </div>
 
                     <div className="signupheader">
-                        <input type="submit" value="submit" />
+                        <input type="submit" value="submit" className="button-signup"/>
                     </div>
 
                 </form>

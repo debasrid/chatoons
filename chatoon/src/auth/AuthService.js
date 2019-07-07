@@ -1,22 +1,26 @@
 import axios from "axios";
 import { API_URL } from '../config/config'
 
+
+
+
 class AuthService {
   service = axios.create({
     baseURL: "http://localhost:5000/auth",
     withCredentials: true
   });
 
-  signup = (username, password) => {
+  signup = (username,firstname,lastname,email, password,profile_picture) => {
     return this.service
-      .post("/signup", { username: username, password: password })
+      .post("/signup", {username:username, firstname:firstname, lastname:lastname, 
+        email: email, password: password, profile_picture: profile_picture })
       .then(response => response.data);
   };
 
-  login = (username, password) => {
+  login = (email, password) => {
     return this.service
-      .post("/login", { username: username, password: password })
-      .then(response => response.data);
+      .post("/login", { email: email, password: password })
+      .then(response => response.data)
   };
 
   currentUser = () => {

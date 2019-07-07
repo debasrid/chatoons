@@ -8,7 +8,8 @@ class FriendList extends Component {
     constructor(){
         super();
         this.state = {
-            friends: []
+            friends: [],
+            isAvailableforchat: false
         }
     }
     
@@ -22,7 +23,10 @@ class FriendList extends Component {
     componentDidMount() {
         axios.get("http://localhost:5000/friends/getFriends?userId=5d01829c42abc000e0dab2cf")
         .then(response => {
-            this.setState({friends: response.data})
+            this.setState({
+                friends: response.data,
+                isAvailableforchat: true
+            })
         })
     }
     
@@ -47,12 +51,13 @@ class FriendList extends Component {
         ] 
         */
         var friendProfileList = this.state.friends.map(function(friend, index){
-            return  <div><p><img src={friend.profile_picture} id={index} width="50" height="50"></img></p><p>{friend.firstname}&nbsp;{friend.lastname}</p><p>{friend.username}</p><hr /></div>;
+            var friendProfileContent = <div><p><img src={friend.profile_picture} id={index} width="50" height="50"></img></p><p>Name: {friend.firstname}&nbsp;{friend.lastname}</p><p>Username: {friend.username}</p><hr /><div><MessageBox friendusername={friend.username} /></div></div>;
+            return  friendProfileContent;
         })
         return (
             <div className="friendlistcontainer">
                 <div>
-                    <h2>My Friends</h2>
+                    <h2>My Friends</h2> 
                     <div>
                         <ul>{ friendProfileList }</ul>                    
                     </div>    

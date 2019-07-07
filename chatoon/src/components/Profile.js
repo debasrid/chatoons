@@ -33,13 +33,14 @@ export default class Profile extends Component {
     render() {
         return (
             <div>
-                <div className="cover-pic">
-                    <div><h2>My Profile</h2></div>
+                <div>
+                    <div><h2><br/>My Profile</h2></div>
+                   <br/>
                     <div>
                         <p><img src={this.state.profilepic} width="50" height="50"></img></p>
-                        <p>Name:&nbsp;{this.state.firstname}&nbsp;{this.state.lastname}</p>
-                        <p>Username:&nbsp;{this.state.username}</p>
-                        <p>Email:&nbsp;{this.state.email}</p>
+                        <p><b>Name:</b>&nbsp;{this.state.firstname}&nbsp;{this.state.lastname}</p>
+                        <p><b>Username:</b>&nbsp;{this.state.username}</p>
+                        <p><b>Email:</b>&nbsp;{this.state.email}</p>
                     </div>
                 </div>
             </div>

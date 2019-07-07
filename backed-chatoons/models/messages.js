@@ -5,8 +5,8 @@ const Schema   = mongoose.Schema;
 const messageSchema = new Schema({  
 
   messagethreadtimestamp: Date,
-  messagethreadvisible: Boolean,
-  messengers:  [{ type : Schema.Types.ObjectId, ref: 'User' }],
+  messagethreadvisible: {type: Boolean, default: true},
+  messengers:  [{ type : String }],
   messages:[{
     messagesender: String,
     messagereceiver:  String,

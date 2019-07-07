@@ -3,23 +3,40 @@ import axios from 'axios';
 import { API_URL } from '../../config/config'
 
 export default class MessagesContainer extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            _id: '',
+            threadId: this.props.threadid,
             messages: []
         }
     }
     componentDidMount() {
-        axios.get("http://localhost:5000/chat/5d1522cc6eddab38909d676e")
-        .then(response => {
-            if(response.data.messagethreadvisible){
-                this.setState({
-                    _id: response.data._id,
-                    messages: response.data.messages
-                })
+        var threadurl = "http://localhost:5000/chat/"+this.state.threadId;
+        const chatRefreshId = setInterval(() => {
+            axios.get(threadurl)
+            .then(response => {
+                if(response.data.messagethreadvisible){
+                    
+                    this.setState({
+                        threadId: response.data._id,
+                        messages: response.data.messages
+                    });
+                } else {
+                    this.state = {
+                        threadId: this.props.threadid,
+                        messages: []
+                    }
+                }
+            })
+        }, 3000);
+        // after 60 seconds stop refresh
+        setTimeout(() => { 
+            clearInterval(chatRefreshId); 
+            this.state = {
+                threadId: this.props.threadid,
+                messages: [{textmessage: 'Chat closed'}]
             }
-        })
+        }, 60000);
     }
     render() {
 
@@ -30,7 +47,6 @@ export default class MessagesContainer extends Component {
             color: "white",
             height:"300px"
         }
-        
         var messageList = this.state.messages.map(function(message){
             var imageContent = '';
             var messageContent = '';
@@ -60,4 +76,3 @@ export default class MessagesContainer extends Component {
         )
     }
 }
-
