@@ -26,15 +26,12 @@ router.get('/getFriends', (req, res, next) => {
 //search friendlist
 
 router.get('/search', (req, res, next) => {
-    User.find({firstname: req.query.searchcriteria})
+    User.findOne({firstname: req.query.searchcriteria})
     .then(result =>{
-        console.log("User found: "+result);
-        res.json(result[0])
-    })
-    .catch(err => {
-        res.send(err)
-    })
-})
+        res.json(result)})
+        .catch(err => {
+            res.send(err)})
+        })
 
 // send add friend request
 router.post('/addfriend', (req, res) => {

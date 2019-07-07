@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-//import { Button, Header, Image, Modal } from 'semantic-ui-react'
-//import PhotosUploader from '../PhotosUploader';
-//import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
-//import Spinner from './Spinner'
-//import Images from './Images'
-//import Buttons from './Buttons'
+import {Image, Transformation} from 'cloudinary-react';
 import { API_URL } from '../../config/config';
 import axios from 'axios';
 
@@ -13,28 +8,48 @@ export default class MessageInput extends Component {
         super(props);
         this.state = { 
             threadid: this.props.threadid,
-            textmessage: `${API_URL}/chat/` + this.props.threadid + "/sendmessage", 
+            threadurl: `${API_URL}/chat/` + this.props.threadid + "/sendmessage",
+            senderid: this.props.senderid,
+            receiverid: this.props.receiverid,
+            textmessage: '', 
+            imageFilePath: '',
             imageFile: null
         }
-        this.handleImageUpload = this.handleImageUpload.bind(this)
+        this.handleImageUpload = this.handleImageUpload.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     handleImageUpload(event) {
-        this.setState({
-            imageFile: URL.createObjectURL(event.target.files[0])    
+        this.setState({          
+            imageFilePath: URL.createObjectURL(event.target.files[0]),
+            imageFile: event.target.files[0]      
         })
     }
+
       
-    handleFormSubmit = (event) => {
-      event.preventDefault();
-      const textmessage = this.state.textmessage;
-      const threadurl = `${API_URL}/chat/` + this.state.threadid + "/sendmessage";
-      console.log("threadur: "+threadurl);
-      axios.post(threadurl, { textmessage })
-      .then( () => {
-          this.setState({textmessage: ""});
-      })
-      .catch( error => console.log(error) )
+    handleFormSubmit = (event) => { 
+        event.preventDefault();
+        var form_data = new FormData();
+        form_data.append('messagesender', this.state.senderid);
+        form_data.append('messagereceiver', this.state.receiverid);
+        if(this.state.imageFile!=null) form_data.append('imageFile', this.state.imageFile, this.state.imageFile.name);
+        if(this.state.textmessage!='') form_data.append('textmessage', this.state.textmessage);
+        
+        axios.post(this.state.threadurl, form_data, {
+            headers: {
+            'content-type': 'multipart/form-data'
+            }
+        })
+        .then(body => { 
+            this.setState({
+                textmessage: '', 
+                imageFilePath: '',
+                imageFile: null
+            });
+            console.log('Upload successful!  Server responded with:', body);
+        })
+        .catch( error => console.log(error) )
     }
   
     handleChange = (event) => {  
@@ -55,10 +70,11 @@ export default class MessageInput extends Component {
             <div style={style} >
                 <form onSubmit={this.handleFormSubmit}>
                     <div>
-                        <input type="file" onChange={this.handleImageUpload}/>
-                        <img width="50px" src={this.state.imageFile}/>
+                        <input type="file" id="image" accept="image/png, image/jpeg" onChange={this.handleImageUpload}/>
+                        <br></br>
+                        <img width="50px" name="imagemessage" src={this.state.imageFilePath}/><br></br> 
                     </div>
-                    <textarea name="textmessage" value={this.props.textmessage} onChange={ e => this.props.handleChange(e)}/>
+                    <textarea name="textmessage" value={this.state.textmessage} onChange={ e => this.handleChange(e)}/>
                     <input type="submit" value="Submit" />
                 </form>
             </div>

@@ -19,6 +19,35 @@ export default class MessageBox extends Component {
         }
     }
 
+    componentDidMount() {
+        var threadurl = "http://localhost:5000/chat/"+this.state.threadId;
+        const chatRefreshId = setInterval(() => {
+            axios.get(threadurl)
+            .then(response => {
+                if(response.data.messagethreadvisible){
+                    
+                    this.setState({
+                        threadId: response.data._id,
+                        messages: response.data.messages
+                    });
+                } else {
+                    this.state = {
+                        threadId: this.props.threadid,
+                        messages: []
+                    }
+                }
+            })
+        }, 3000);
+        // after 60 seconds stop refresh
+        setTimeout(() => { 
+            clearInterval(chatRefreshId); 
+            this.state = {
+                threadId: this.props.threadid,
+                messages: [{textmessage: 'Chat closed'}]
+            }
+        }, 60000);
+    }
+
     handleChange = (event) => {  
         const {name, value} = event.target;
         this.setState({[name]: value});
@@ -37,8 +66,9 @@ export default class MessageBox extends Component {
     render() {
         return (
             <div className="messageBox">
+                <h2>My Chat Requests</h2> 
                 <form onSubmit={this.handleFormSubmit} id="chatForm">
-                    <Button>Chat Now</Button>
+                    <Button>Chat Request</Button>
                 </form>
                 {this.state.isOpen ? 
                   <div>

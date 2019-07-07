@@ -5,6 +5,7 @@ import AuthService from '../auth/AuthService';
 
 export default class Signup extends Component {
     state = {
+        username:"",
         firstname: "",
         lastname: "",
         email: "",
