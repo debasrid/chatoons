@@ -1,3 +1,4 @@
+const dotenv = require('dotenv');
 const express = require('express');
 const app = express();
 const router = express.Router();
@@ -8,7 +9,7 @@ const AWS = require('aws-sdk');
 //const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 //const fileType = require('file-type');
-const formidable = require('formidable')
+const formidable = require('formidable');
 
 // configure the keys for accessing AWS
 /*AWS.config.update({
@@ -65,6 +66,12 @@ router.post('/startchat',(req, res, next) => {
         var imageFile = null;
         var imageUpload = false;
 
+        cloudinary.config({
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET
+          }); 
+
         new formidable.IncomingForm().parse(req)
         .on('field', (name, field) => {
             console.log('Field', name, field);
@@ -98,6 +105,11 @@ router.post('/startchat',(req, res, next) => {
                 messagesent:moment(new Date()).format("YYYY-MM-DD HH:mm:ss:SSS")
             };
             if(imageUpload) {
+                cloudinary.config({
+                    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+                    api_key: process.env.CLOUDINARY_API_KEY,
+                    api_secret: process.env.CLOUDINARY_API_SECRET
+                  }); 
                 cloudinary.uploader.upload(imageFile.path, { tags: 'chat image' })
                 .then(function (image) {
                     console.log();

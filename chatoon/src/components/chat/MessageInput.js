@@ -57,27 +57,20 @@ export default class MessageInput extends Component {
         this.setState({[name]: value});
     }
     render() {
-        const style = {
-           
-            color: "pink",
-            height:"120px",
-            border:'3 px solid grey'
-        }
-
-       
+          
 
         return (
-            <div style={style} >
-                <form onSubmit={this.handleFormSubmit}>
+            
+                <form onSubmit={this.handleFormSubmit} className="chatinputcontainer">
                     <div>
                         <input type="file" id="image" accept="image/png, image/jpeg" onChange={this.handleImageUpload}/>
                         <br></br>
                         <img width="50px" name="imagemessage" src={this.state.imageFilePath}/><br></br> 
-                    </div>
-                    <textarea name="textmessage" value={this.state.textmessage} onChange={ e => this.handleChange(e)}/>
-                    <input type="submit" value="Submit" />
+                    
+                    <textarea name="textmessage"  className="resizedTextbox" value={this.state.textmessage} onChange={ e => this.handleChange(e)}/>
+                   <input type="submit" value="Submit" className="button-login"/>
+                   </div>
                 </form>
-            </div>
-        )
+                   )
     }
 }

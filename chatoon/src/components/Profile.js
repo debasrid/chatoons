@@ -3,31 +3,15 @@ import axios from 'axios';
 import { API_URL } from '../config/config'
 
 export default class Profile extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            username: '',
-            firstname: '',
-            lastname: '',
-            email: '',
-            profile_picture: ''
+            username: this.props.currentUserDetails.username,
+            firstname: this.props.currentUserDetails.firstname,
+            lastname: this.props.currentUserDetails.lastname,
+            email: this.props.currentUserDetails.email,
+            profilepic: this.props.currentUserDetails.profile_picture
         }
-    }
-
-    componentDidMount() {
-        
-        var userprofileapi = "http://localhost:5000/users/5d0c0ac5602bbd448c9d4ee4";
-        
-        axios.get(userprofileapi)
-        .then(response => {
-            this.setState({
-                username: response.data.username,
-                firstname: response.data.firstname,
-                lastname: response.data.lastname,
-                email: response.data.email,
-                profilepic: response.data.profile_picture[0]
-            })
-        })
     }
 
     render() {

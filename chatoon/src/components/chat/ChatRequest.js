@@ -9,72 +9,52 @@ export default class MessageBox extends Component {
     constructor(props){
         super(props);
         this.state = {
-            senderid: "Debasri",
-            receiverid: this.props.friendusername,
-            threadid: '',
-            response: '',
-            messages: [],
-            isOpen: false,
-            textMessage: ""
+            chatrequest: null,
+            chatIntervalId: '',
+            isOpen: false
         }
     }
 
     componentDidMount() {
-        var threadurl = "http://localhost:5000/chat/"+this.state.threadId;
+        var threadurl = "http://localhost:5000/chat/chatrequests/"+this.props.currentUserDetails.username;
         const chatRefreshId = setInterval(() => {
             axios.get(threadurl)
             .then(response => {
-                if(response.data.messagethreadvisible){
-                    
                     this.setState({
-                        threadId: response.data._id,
-                        messages: response.data.messages
+                        chatrequest: response.data
                     });
-                } else {
-                    this.state = {
-                        threadId: this.props.threadid,
-                        messages: []
-                    }
-                }
             })
-        }, 3000);
-        // after 60 seconds stop refresh
-        setTimeout(() => { 
-            clearInterval(chatRefreshId); 
-            this.state = {
-                threadId: this.props.threadid,
-                messages: [{textmessage: 'Chat closed'}]
-            }
-        }, 60000);
+        }, 5000);
+        this.setState({chatIntervalId: chatRefreshId});
     }
 
     handleChange = (event) => {  
         const {name, value} = event.target;
         this.setState({[name]: value});
     }
-    handleFormSubmit = (event) => {
-        event.preventDefault();
-        const senderid = this.state.senderid;
-        const receiverid = this.state.receiverid;
-        axios.post(`${API_URL}/chat/startchat`, { senderid,  receiverid})
-        .then( result => {
-            this.setState({threadid: result.data._id});
-            this.setState({isOpen: true});
-        })
-        .catch( error => console.log(error) )
-      }
+    handleChatReqFormSubmit = (event) => {
+        clearInterval(this.state.chatIntervalId);
+        this.setState({
+            chatIntervalId: '',
+            isOpen: true
+        });
+    }
+
     render() {
         return (
-            <div className="messageBox">
+            <div >
                 <h2>My Chat Requests</h2> 
-                <form onSubmit={this.handleFormSubmit} id="chatForm">
-                    <Button>Chat Request</Button>
-                </form>
+                {(this.state.chatrequest !=null && this.state.chatrequest.length != 0) ? 
+                <div>
+                    <p>Chat request from {this.state.chatrequest[0].messengers[0]}!</p>
+                    <Button onClick={this.handleChatReqFormSubmit}>Start Chatting</Button>
+                </div> : "No chat request"
+                } 
                 {this.state.isOpen ? 
-                  <div>
-                        <MessagesContainer threadid={this.state.threadid}/>
-                        <MessageInput threadid={this.state.threadid} senderid={this.state.senderid} receiverid={this.state.receiverid} handleChange={this.handleChange}/>
-                  </div>  : "chat closed"
+                    <div>
+                            <MessagesContainer threadid={this.state.chatrequest[0]._id}/>
+                            <MessageInput threadid={this.state.chatrequest[0]._id} senderid={this.state.chatrequest[0].messengers[0]} receiverid={this.state.chatrequest[0].messengers[0]} handleChange={this.handleChange}/>
+                    </div>  : ""
                 }
             </div>
         )

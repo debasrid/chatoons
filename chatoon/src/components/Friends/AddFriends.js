@@ -4,9 +4,10 @@ import axios from 'axios';
 
 
 export default class AddFriends extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
+            currentUserDetails: this.props.currentUserDetails,
             userid: '',
             username: '',
             firstname: '',
@@ -44,7 +45,7 @@ export default class AddFriends extends Component {
 
     handleAddFriendFormSubmit = (event) => {
         event.preventDefault();
-        const userid = '5d0c0ac5602bbd448c9d4ee4';
+        const userid = this.state.currentUserDetails._id;
         const frienduserid = this.state.userid;
         const adduserapi = "http://localhost:5000/friends/addfriend";
         axios.post(adduserapi, { userid, frienduserid})
@@ -57,7 +58,7 @@ export default class AddFriends extends Component {
     
     render() {
         return (
-            <div >
+            <div className="searchfriendbox" >
                 <h2>Add Friend</h2>
                 
                 <form onSubmit={this.handleFormSubmit} id="friendsearchForm">
@@ -65,14 +66,15 @@ export default class AddFriends extends Component {
                     <input type="submit" value="Search" id="search-submit" className="button-addfriend"/>                      
                 </form>
 
-                <form onSubmit={this.handleAddFriendFormSubmit} id="friendaddForm">
-
+                <form onSubmit={this.handleAddFriendFormSubmit} id="friendaddForm" >
+                
                 {this.state.isFound ? 
                     <div>
                         <p><img src={this.state.profilepic} width="50" height="50"></img></p>
                         <p><b>Name:</b>&nbsp;{this.state.firstname}&nbsp;{this.state.lastname}</p>
                         <p><b>Username:</b>&nbsp;{this.state.username}</p>
                         <p><b>Email:</b>&nbsp;{this.state.email}</p>
+                        
                     </div>  : "No friend found"
                 }
                 {this.state.isAdded ? 
@@ -80,11 +82,11 @@ export default class AddFriends extends Component {
                         <p>Friend request sent!</p>
                     </div>  : ""
                 }
-                   
-                <div>
+                   <div>
                  <br/>
                 <input type="submit" value="Add" id="Add-friend" className="button-signup"/>  
                 </div>
+                
                 </form>
              </div>
              

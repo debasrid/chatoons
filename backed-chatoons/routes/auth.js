@@ -118,6 +118,7 @@ authRoutes.post("/login", (req, res, next) => {
             // We are now logged in (that's why we can also send req.user)
             res.status(200).json(theUser);
         });
+        //console.log(res);
     })(req, res, next);
 });
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AuthService from "../auth/AuthService";
+import Dashboard from './Dashboard'
 
 export default class Login extends Component {
   state = {
@@ -27,7 +28,8 @@ export default class Login extends Component {
       .login(email, password)
       .then(response => {
         console.log("login:", response);
-        this.props.setUser(response);
+        this.props.setUser(response)
+        ;
       })
       .catch(err => {
         console.log(err);

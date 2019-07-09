@@ -36,15 +36,15 @@ export default class MessageBox extends Component {
       }
     render() {
         return (
-            <div className="messageBox">
+            <div >
                 <form onSubmit={this.handleFormSubmit} id="chatForm">
-                    <Button>Chat Now</Button>
+                    <input type="submit" value="Chat now" className="messagenowbutton"/>
                 </form>
                 {this.state.isOpen ? 
                   <div>
                         <MessagesContainer threadid={this.state.threadid}/>
                         <MessageInput threadid={this.state.threadid} senderid={this.state.senderid} receiverid={this.state.receiverid} handleChange={this.handleChange}/>
-                  </div>  : "chat closed"
+                  </div>  : ""
                 }
             </div>
         )

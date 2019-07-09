@@ -7,7 +7,7 @@ const userSchema = new Schema({
   lastname: String,
   email: String,
   password: String,
-  profile_picture: [{ type: String}],
+  profile_picture: [{ type: String }],
   message: [],
   friendrequestsreceived: [{
     frienduserid: { type : Schema.Types.ObjectId, ref: 'User' },

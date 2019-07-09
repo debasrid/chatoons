@@ -67,7 +67,7 @@ export default class MessagesContainer extends Component {
         })
         return (
             <div>
-              <div style={style} > 
+              <div className="chatcontainer" > 
               <div>{ messageList }</div>               
                   
               </div>

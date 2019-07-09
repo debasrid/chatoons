@@ -8,11 +8,16 @@ export default class Dashboard extends Component {
     render() {
         return (
             <div className="dashboardcontainer">
-                <p className="profilebox"><Profile/></p>
-                <hr/>
-                <p className="addfriendbox"><Friendlist/></p>
-                <p className="searchfriendbox"><ChatRequest/></p>
-                <p className="searchfriendbox"><Addfriend/></p>
+                <div className="profilebox"><Profile currentUserDetails={this.props.currentUserDetails}/>
+                <p className="addfriendbox"><Addfriend currentUserDetails={this.props.currentUserDetails}/></p>
+                </div>
+                
+                <div className="friendlistbox"><Friendlist currentUserDetails={this.props.currentUserDetails}/></div>
+                <div className="dashboardrightdiv">
+                <p className="chatrequestbox" ><ChatRequest currentUserDetails={this.props.currentUserDetails}/></p>
+
+                
+                </div>
             </div>
         )
     }
